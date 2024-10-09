@@ -20,9 +20,6 @@ export function AllProduct() {
   if (isFetching || isLoading) return <Text>Loading....</Text>
   if (!data) return<Text>No data</Text>
 
-  const x:string="8908042109235"
-
-
 
   function handleOnpressProduct(id:string){
     dispatch(setProductId(id))

@@ -1,8 +1,8 @@
-import React from 'react'
-import { CustomCarousel } from '../components/Carousel'
-import { AllProduct } from './product/allProduct'
-import ParallaxScrollView from '../components/ParallaxScrollView'
-import SearchBar from '../components/Header/searchbar'
+import React from 'react';
+import { CustomCarousel } from '../components/Carousel';
+import { AllProduct } from './product/allProduct';
+import ParallaxScrollView from '../components/ParallaxScrollView';
+// import MyComponent from '../components/BottemNav';
 
 const randomImageUrls = [
   "https://evitstest.myshopify.com/cdn/shop/files/Reshma_Beauty_Banner_1.webp?v=1727673900&width=2000",
@@ -15,6 +15,7 @@ const randomImageUrls = [
 
 export function Landing() {
   return (
+    <>
      <ParallaxScrollView 
       headerImage={
        <CustomCarousel CarouselData={randomImageUrls}/>
@@ -22,6 +23,7 @@ export function Landing() {
     >  
         <AllProduct/>
      </ParallaxScrollView>
-
+     {/* <MyComponent/> */}
+    </>
   )
 }

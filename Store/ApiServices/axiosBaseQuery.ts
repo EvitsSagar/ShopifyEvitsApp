@@ -1,11 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { productsRes } from "../Redusers/Product/type.p";
 
 
 const ShopifyCredentials={
-    "X-Shopify-Access-Token": "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",
-    "key":"82407133099674c9e297c3c45eebe42f",
-    "store":"evitstest"
+    "X-Shopify-Access-Token": "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",
+    "key":"52a3be7a0c80671179a4a6ca6777b886",
+    "store":"app123test"
 }
 
 export const baseApi = createApi({
@@ -18,7 +17,5 @@ export const baseApi = createApi({
     },
     }),
     endpoints: () => ({}),
-
 });
-
 

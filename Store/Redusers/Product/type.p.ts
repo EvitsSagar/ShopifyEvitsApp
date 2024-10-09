@@ -78,3 +78,8 @@ export interface productObj{
 export interface productsRes {
     products:productObj[]
   }
+
+
+export interface singleProductRes{
+    product:productObj
+}

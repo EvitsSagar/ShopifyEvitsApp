@@ -1,5 +1,5 @@
 import { baseApi } from "../../ApiServices/axiosBaseQuery";
-import { productsRes,productObj } from "./type.p";
+import { productsRes,singleProductRes } from "./type.p";
 
 
 export const productApi = baseApi.injectEndpoints({
@@ -12,7 +12,7 @@ export const productApi = baseApi.injectEndpoints({
             }),
         }),
 
-        getSingleProduct:build.query<productObj,{productId:string}>({
+        getSingleProduct:build.query<singleProductRes,{productId:string}>({
             query:({productId}) =>({
                 method:'GET',
                 url:`/products/${productId}.json`,
