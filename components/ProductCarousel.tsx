@@ -3,6 +3,7 @@ import { Dimensions, Text, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { Image } from 'react-native';
 import { imagesObj } from '../Store/Redusers/Product/type.p';
+import { Card } from 'react-native-paper';
 
 
 
@@ -27,15 +28,12 @@ export function ProductCarousel({CarouselData}:data) {
                     <View
                         style={{
                             flex: 1,
-                            borderWidth: 1,
+                            borderWidth: 0,
                             justifyContent: 'center',
                         }}
                     >
-                        <Image
-                            onLoad={() => true}
-                            source={{uri:item.src}}
-                            style={{ width: width, height: width / 2}}
-                            resizeMode='contain'
+                        <Card.Cover
+                        source={{uri:item.src}}
                         />
                     </View>
                 )}

@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { Image } from 'react-native';
+import { Card } from 'react-native-paper';
 
 
 
@@ -26,15 +27,12 @@ export function CustomCarousel({CarouselData}:data) {
                     <View
                         style={{
                             flex: 1,
-                            borderWidth: 1,
+                            borderWidth: 0,
                             justifyContent: 'center',
                         }}
                     >
-                        <Image
-                            onLoad={() => true}
-                            source={{uri:item}}
-                            style={{ width: width, height: width / 2}}
-                            resizeMode='contain'
+                        <Card.Cover
+                        source={{uri:item}}
                         />
                     </View>
                 )}

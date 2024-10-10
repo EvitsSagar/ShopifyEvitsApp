@@ -5,6 +5,21 @@ export interface inputLoginVarible{
     password:string;
 }
 
+export interface inputGetCustomerDetils{
+  customerAccessToken:string;
+}
+
+export interface customer{
+  displayName:string;
+  email:string;
+  firstName:string;
+  lastName:string;
+  phone:string|null;
+}
+
+export interface getCustomerDetRes{
+  customer:customer
+}
 
 export interface customerAccessToken{
     accessToken:string;
@@ -16,6 +31,12 @@ export interface loginResponse{
         customerAccessToken: customerAccessToken;
         userErrors:[];
     };
+}
+
+
+export interface logoutResponse{
+  customerAccessTokenDelete:string;
+  userErrors:[];
 }
 
 
@@ -36,3 +57,26 @@ export const LOGIN_CREATE = gql`mutation customerAccessTokenCreate($email: Strin
   }`;
 
 
+export const GET_CUSTOMER_DETAILS= gql`query getCustomer($customerAccessToken: String!) {
+  customer(customerAccessToken: $customerAccessToken) {
+    email
+    displayName
+    firstName
+    lastName
+    phone
+  }
+}
+`
+
+
+
+export const LOGOUT_PERFORM=gql`mutation customerAccessTokenDelete($customerAccessToken: String!) {
+  customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
+    deletedAccessToken
+    userErrors {
+      field
+      message
+    }
+  }
+}
+`

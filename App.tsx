@@ -7,9 +7,10 @@ import { PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Product } from './pages/product/product';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 import { BuyNow } from './pages/checkout/buyNow';
 import { Home } from './pages/Home';
+import client from './Store/ApiServices/graphBaseApi1';
 
 export type RootstackPerms={
   Home: undefined;
@@ -21,15 +22,9 @@ export type RootstackPerms={
   };
 }
 
-const client = new ApolloClient({
-  uri: 'https://app123test.myshopify.com/api/2024-04/graphql.json',
-  cache: new InMemoryCache(),
-  headers:{
-    "X-Shopify-Storefront-Access-Token":"4f86240112ee04b2c24c28f9e12daa3d"
-  }
-});
 
 const Stack = createNativeStackNavigator<RootstackPerms>();
+
 
 
 
