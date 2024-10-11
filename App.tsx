@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, } from 'react-native';
 import { Provider } from 'react-redux';
 import store from './Store/store';
 import { PaperProvider } from 'react-native-paper';
@@ -11,48 +10,20 @@ import { ApolloProvider } from '@apollo/client';
 import { BuyNow } from './pages/checkout/buyNow';
 import { Home } from './pages/Home';
 import client from './Store/ApiServices/graphBaseApi1';
-
-export type RootstackPerms={
-  Home: undefined;
-  product: undefined;
-  buyNow:{
-    data:{
-      url:string;
-    }
-  };
-}
-
-
-const Stack = createNativeStackNavigator<RootstackPerms>();
-
-
+import * as React from 'react';
+import { LaunchRouts } from './navigation/AppRouts';
+import { BottemNav } from './navigation/BottemNav';
 
 
 export default function App() {
   return (
     <Provider store={store}>
        <ApolloProvider client={client}>
-      <NavigationContainer>
         <PaperProvider>
-            <Stack.Navigator>
-              <Stack.Screen
-                name="Home"
-                component={Home}
-                options={{headerShown:false}} 
-              />
-              <Stack.Screen
-                name="product"
-                component={Product}
-                options={{headerShown:false}} 
-              />
-              <Stack.Screen
-                name="buyNow"
-                component={BuyNow}
-                options={{headerShown:false}} 
-              />
-            </Stack.Navigator>
-        </PaperProvider>
+      <NavigationContainer>
+       <BottemNav/>
       </NavigationContainer>
+        </PaperProvider>
        </ApolloProvider>
     </Provider>
   );

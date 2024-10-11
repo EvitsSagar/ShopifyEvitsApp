@@ -14,7 +14,7 @@ export interface customer{
   email:string;
   firstName:string;
   lastName:string;
-  phone:string|null;
+  phone:string;
 }
 
 export interface getCustomerDetRes{

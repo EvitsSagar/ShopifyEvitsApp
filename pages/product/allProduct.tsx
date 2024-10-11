@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'; 
-import { RootstackPerms } from '../../App';
+import { RootstackPerms } from '../../navigation/AppRouts';
 import { useGetSingleProductQuery } from '../../Store/Redusers/Product/product';
 import { setProductId } from '../../Store/Redusers/Product/productSlice';
 

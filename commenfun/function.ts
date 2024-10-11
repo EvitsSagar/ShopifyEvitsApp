@@ -23,15 +23,9 @@ export const storeCustomerToken = async (value:customerAccessToken) => {
 //   };
 
 
-  export  const getCustomerAccessStoreData = async () => {
-    const dispatch=useDispatch()
+  export  const getCustomerAccessStoreData = async () => {  
     try {
       const jsonValue = await AsyncStorage.getItem("customer-token");
-      if(jsonValue){
-        dispatch(setcustomerStorageToken(JSON.parse(jsonValue)))
-      }else{
-        dispatch(resetCustomerStorageToken())
-      }
     } catch (e) {
       return e;
     }
