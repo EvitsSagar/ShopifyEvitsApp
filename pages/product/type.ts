@@ -6,6 +6,12 @@ export interface CheckoutCreateVariables {
   }
 
 
+export interface getCheckidInputs{
+    input:{
+      lineItems:CheckoutCreateVariables[]
+    }
+}
+
 
 
 export interface LineItemNode {
@@ -35,27 +41,42 @@ export interface CheckoutCreateResponse {
   }
 
 
+export interface checkoutOuthRes{
+    checkoutCustomerAssociateV2: {
+        checkout: Checkout;
+    };
+}
+
+  export const GET_CHECKOUT_ID = gql`
+  mutation checkoutCreate($input: CheckoutCreateInput!) {
+  checkoutCreate(input: $input) {
+    checkout {
+      id
+    }
+    checkoutUserErrors {
+      field
+      message
+    }
+  }
+}
+  `;
+
+export interface CreateCheckoutWithOath{
+    checkoutId:string;
+    customerAccessToken:string;
+}  
+
 export const CHECKOUT_CREATE = gql`
-mutation checkoutCreate($variantId: ID!, $quantity: Int!) {
-  checkoutCreate(input: {
-    lineItems: [
-      {
-        variantId: $variantId,
-        quantity: $quantity
-      }
-    ]
-  }) {
+mutation checkoutCustomerAssociateV2($checkoutId: ID!, $customerAccessToken: String!) {
+  checkoutCustomerAssociateV2(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
     checkout {
       id
       webUrl
-      lineItems(first: 5) {
-        edges {
-          node {
-            title
-            quantity
-          }
-        }
-      }
+    }
+    checkoutUserErrors {
+      code
+      field
+      message
     }
   }
 }

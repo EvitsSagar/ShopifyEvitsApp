@@ -17,6 +17,9 @@ export function BuyNow() {
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
         <WebView
+        onNavigationStateChange={(navState) => {
+         
+        }}
          javaScriptEnabled={true}
          domStorageEnabled={true}
          startInLoadingState={true}

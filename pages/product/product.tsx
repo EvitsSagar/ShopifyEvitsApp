@@ -13,12 +13,14 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootstackPerms } from '../../navigation/AppRouts';
 import { setBuynowProductUrl } from '../../Store/Redusers/BuyProduct/buyNowProduct';
-import { CHECKOUT_CREATE,CheckoutCreateVariables,CheckoutCreateResponse } from './type';
+import { CHECKOUT_CREATE,CheckoutCreateVariables,CheckoutCreateResponse,GET_CHECKOUT_ID,getCheckidInputs,CreateCheckoutWithOath,checkoutOuthRes } from './type';
+import { customerToken } from '../../Store/Redusers/storageData/custumerStorageToken';
 
 
 
 
 export function Product() {
+  const { accessToken }=useSelector(customerToken)
   const navigation = useNavigation<NativeStackNavigationProp<RootstackPerms>>();
   const width = Dimensions.get('window').width;
   const { productid } = useSelector(selectProductId);
@@ -28,23 +30,51 @@ export function Product() {
     isLoading,
     isFetching,
   } = useGetSingleProductQuery({ productId: productid });
-  const [checkoutCreate, { loading, error, data: dta }] = mutation<CheckoutCreateResponse, CheckoutCreateVariables>(CHECKOUT_CREATE);
+  const [checkoutCreate, { loading:checkoutLoad, error:checkoutError, data: dta }] = mutation<checkoutOuthRes, CreateCheckoutWithOath>(CHECKOUT_CREATE);
+  const [getcheckoutID, { loading:getChkidLoad, error:getChkidErr, data:getCheckoutidData }] = mutation<CheckoutCreateResponse, getCheckidInputs>(GET_CHECKOUT_ID);
   const [activeVarient, setActiveVarient] = React.useState<string>();
 
   const handleBuyNow = async () => {
-    checkoutCreate({
-      variables: {
-        variantId: `gid://shopify/ProductVariant/${activeVarient}`,
-        quantity: 1,
+    // checkoutCreate({
+    //   variables: {
+    //     variantId: `gid://shopify/ProductVariant/${activeVarient}`,
+    //     quantity: 1,
+    //   }
+    // })
+    getcheckoutID({
+    variables:{
+      input:{
+        lineItems:[
+          {
+            variantId: `gid://shopify/ProductVariant/${activeVarient}`,
+            quantity: 1,
+          }
+        ]
       }
+    }
     })
+
   }
+
+ const GetCartId=React.useMemo(function fetchBuyurlWithAuth(){
+     if(!accessToken) return;
+       if(getCheckoutidData){
+        checkoutCreate({
+          variables:{
+            checkoutId:getCheckoutidData.checkoutCreate.checkout.id,
+            customerAccessToken:accessToken
+          }
+        })
+         }
+  },[getCheckoutidData]);
 
   React.useEffect(()=>{
     if(dta){
-      navigation.navigate("buyNow",{data:{url:dta?.checkoutCreate.checkout.webUrl}})
+      navigation.navigate("buyNow",{data:{url:dta?.checkoutCustomerAssociateV2.checkout.webUrl}})
     }
   },[dta])  
+ 
+  GetCartId
 
   React.useLayoutEffect(() => {
     if (data) {
@@ -90,7 +120,7 @@ export function Product() {
         <Button loading={false} mode="contained" onPress={() => console.log('Pressed')}>
           Add to cart
         </Button>
-        <Button loading={loading} mode="contained" onPress={handleBuyNow}>
+        <Button loading={checkoutLoad||getChkidLoad?true:false} mode="contained" onPress={handleBuyNow}>
           Buy Now
         </Button>
       </View>
