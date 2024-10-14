@@ -11,71 +11,14 @@ import { WebView } from 'react-native-webview';
 import { Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootstackPerms } from '../../App';
+import { RootstackPerms } from '../../navigation/AppRouts';
 import { setBuynowProductUrl } from '../../Store/Redusers/BuyProduct/buyNowProduct';
+import { CHECKOUT_CREATE,CheckoutCreateVariables,CheckoutCreateResponse } from './type';
 
 
 
-const CHECKOUT_CREATE = gql`
-  mutation checkoutCreate($variantId: ID!, $quantity: Int!) {
-    checkoutCreate(input: {
-      lineItems: [
-        {
-          variantId: $variantId,
-          quantity: $quantity
-        }
-      ]
-    }) {
-      checkout {
-        id
-        webUrl
-        lineItems(first: 5) {
-          edges {
-            node {
-              title
-              quantity
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export interface CheckoutCreateVariables {
-  variantId: string; 
-  quantity: number;  
-}
-
-interface LineItemNode {
-  title: string;
-  quantity: number;
-}
-
-
-interface LineItemEdge {
-  node: LineItemNode;
-}
-
-
-interface Checkout {
-  id: string;
-  webUrl: string;
-  lineItems: {
-    edges: LineItemEdge[];
-  };
-}
-
-
-interface CheckoutCreateResponse {
-  checkoutCreate: {
-    checkout: Checkout;
-  };
-}
 
 export function Product() {
-  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-  const dispatch = useDispatch();
   const navigation = useNavigation<NativeStackNavigationProp<RootstackPerms>>();
   const width = Dimensions.get('window').width;
   const { productid } = useSelector(selectProductId);

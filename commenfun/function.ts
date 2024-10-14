@@ -23,11 +23,15 @@ export const storeCustomerToken = async (value:customerAccessToken) => {
 //   };
 
 
-  export  const getCustomerAccessStoreData = async () => {  
+  export  const getCustomerAccessStoreData = async ():Promise<customerAccessToken|null|undefined> => {  
     try {
       const jsonValue = await AsyncStorage.getItem("customer-token");
+      if (jsonValue != null) {
+        const parsedValue = JSON.parse(jsonValue);
+      return parsedValue;
+      }
     } catch (e) {
-      return e;
+      console.warn(e);
     }
   };
 

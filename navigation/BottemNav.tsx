@@ -6,6 +6,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-paper/src/components/Icon'
 import { LaunchRouts } from './AppRouts';
 import AccountStack from './accountStack';
+import { getCustomerAccessStoreData } from '../commenfun/function';
+import { useDispatch, useSelector } from 'react-redux';
+import { customerToken, setcustomerStorageToken,resetCustomerStorageToken } from '../Store/Redusers/storageData/custumerStorageToken';
 
 
 
@@ -19,6 +22,40 @@ const ProfileScreen = () => (
 );
 
 export const BottemNav = () => {
+  const { isauthenticated,accessToken,expitesAt }=useSelector(customerToken)
+  const dispatch=useDispatch()
+
+  React.useLayoutEffect(()=>{
+    getCustomerAccessStoreData().then((value) => {
+      if(value){
+        dispatch(setcustomerStorageToken({
+            accessToken:value.accessToken,
+            expitesAt:value.expiresAt,
+            isauthenticated:true,
+          }
+        ))
+      }else if(!value){
+        dispatch(resetCustomerStorageToken())
+      }
+  })
+  },[accessToken])
+
+  // const AuthGurd=React.useMemo(function checkToken(){
+  //   getCustomerAccessStoreData().then((value) => {
+  //     if(value){
+  //       dispatch(setcustomerStorageToken({
+  //           accessToken:value.accessToken,
+  //           expitesAt:value.expiresAt,
+  //           isauthenticated:true,
+  //         }
+  //       ))
+  //     }else if(!value){
+  //       dispatch(resetCustomerStorageToken())
+  //     }
+  // })
+  // },[accessToken]);
+
+
   return (
       <Tab.Navigator
         screenOptions={({ route }) => ({

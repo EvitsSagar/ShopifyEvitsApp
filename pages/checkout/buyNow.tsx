@@ -16,7 +16,11 @@ export function BuyNow() {
     const { params }=route;
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-        <WebView source={{ uri: params.data.url }} style={{ flex: 1 }} />
+        <WebView
+         javaScriptEnabled={true}
+         domStorageEnabled={true}
+         startInLoadingState={true}
+         source={{ uri: params.data.url }} style={{ flex: 1 }} />
     </Suspense>
     
   )

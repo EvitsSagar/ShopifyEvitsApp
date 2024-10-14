@@ -15,17 +15,10 @@ export type RootstackPerms = {
 const AcStack = createNativeStackNavigator<RootstackPerms>();
 
 export default function AccountStack() {
-  const { customerStorageToken } = useSelector(customerToken);
-  
-  // React.useEffect(()=>{
-  //   if(token){
-  //     navigation.navigate("customerDet")
-  //   }
-  // },[token])
-
+  const { isauthenticated } = useSelector(customerToken);
   return (
     <AcStack.Navigator>
-        {customerStorageToken.accessToken===""?
+        {!isauthenticated?
         <AcStack.Screen
           name="login"
           component={LoginForm}

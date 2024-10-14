@@ -6,6 +6,7 @@ export function Home() {
   return (
      <React.Fragment>
       <Landing/>
+      
      </React.Fragment>
   )
 }

@@ -53,11 +53,14 @@ export default function CustmerDetails() {
         lastName:"",
         phone:""
     });
-    const { customerStorageToken } = useSelector(customerToken);
+    const { accessToken } = useSelector(customerToken);
+    
+    if(!accessToken) return;
+
     const [performLogout, { loading:logoutLoad, error:logoutErr, data:logoutData }] = useMutation<logoutResponse, inputGetCustomerDetils>(LOGOUT_PERFORM);
     const { loading, error, data,refetch } = useQuery<getCustomerDetRes, inputGetCustomerDetils>(GET_CUSTOMER_DETAILS, {
         variables: {
-            customerAccessToken: customerStorageToken.accessToken
+            customerAccessToken: accessToken
         }
     });
     
@@ -81,7 +84,7 @@ export default function CustmerDetails() {
     const handleLogout=()=>{
       performLogout({
             variables:{
-                customerAccessToken:customerStorageToken.accessToken
+                customerAccessToken:accessToken
             }
         })
       removeStoreValue("customer-token")

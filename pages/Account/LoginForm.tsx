@@ -19,7 +19,6 @@ interface AuthDetails {
 
 export default function LoginForm() {
     const dispatch=useDispatch()
-    const{ customerStorageToken }=useSelector(customerToken)
     const [inputText, setinputText] = React.useState<inputs>({
         email:"",
         password:""
@@ -32,12 +31,18 @@ export default function LoginForm() {
     const handleLogin =()=>{
      createLogin({
             variables:inputText
-          })
+     })
     }  
+
+
     React.useEffect(()=>{
     if(data){
       storeCustomerToken(data?.customerAccessTokenCreate.customerAccessToken)
-      dispatch(setcustomerStorageToken(data?.customerAccessTokenCreate.customerAccessToken))
+      dispatch(setcustomerStorageToken({
+        accessToken:data.customerAccessTokenCreate.customerAccessToken.accessToken,
+        expitesAt:data.customerAccessTokenCreate.customerAccessToken.expiresAt,
+        isauthenticated:true,
+      }))
     }
     },[data])
    
